@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<title>Tesla Theater</title>
+
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="stylesheet" href="global.css">
+</head>
+
+<body style="background-color:black;" data-new-gr-c-s-check-loaded="14.980.0" data-gr-ext-installed="">
+
+	<main class="svelte-16wde2k">
+		<p><a href="https://www.youtube.com/redirect?q=https://bmaltais.github.io/"><img style="display:none" id="img1"
+					src="logos/fullscreen.jpg" alt="GO FULL SCREEN" class="svelte-16wde2k"></a></p>
+		<p></p>
+		<p><a href="https://www.crave.ca/en"><img src="logos/crave.png" alt="Crave" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://www.disneyplus.com/fr-ca/login"><img src="logos/disney.svg" alt="Disney+" align="middle"
+					hspace="20" vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://www.crave.ca/en/hbo"><img src="logos/hbogo.gif" alt="HBO" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://tv.bell.ca/"><img src="logos/bell.png" alt="Bell Fibe TV" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://netflix.com/"><img src="logos/netflix.png" alt="Tubi TV" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://noovo.ca/"><img src="logos/noovo.png" alt="Tubi TV" align="middle" hspace="20" vspace="10"
+					class="svelte-16wde2k"></a>
+			<a href="https://www.paramountplus.com/ca/"><img src="logos/paramountplus.png" alt="Paramount+"
+					align="middle" hspace="20" vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://www.primevideo.com"><img src="logos/prime.svg" alt="Amazon Prime" align="middle"
+					hspace="20" vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://ici.tou.tv/"><img src="logos/toutv.png" alt="TouTV" align="middle" hspace="20" vspace="10"
+					class="svelte-16wde2k"></a>
+			<a href="https://tubitv.com/"><img src="logos/tubitv.gif" alt="Tubi TV" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://www.qub.ca/tvaplus"><img src="logos/tvaplus.svg" alt="Twitch" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://www.twitch.com"><img src="logos/twitch.png" alt="Twitch" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://tv.virginmobile.ca/"><img src="logos/virginmobile.svg" alt="Twitch" align="middle"
+					hspace="20" vspace="10" class="svelte-16wde2k"></a>
+			<a href="https://www.youtube.com"><img src="logos/youtube.jpg" alt="Youtube" align="middle" hspace="20"
+					vspace="10" class="svelte-16wde2k"></a>
+		</p>
+		<p id="demo1"></p>
+
+		<script>
+			var w = window.innerWidth
+				|| document.documentElement.clientWidth
+				|| document.body.clientWidth;
+
+			var h = window.innerHeight
+				|| document.documentElement.clientHeight
+				|| document.body.clientHeight;
+
+			var x = navigator.userAgent;
+			var url = window.location.href;
+
+
+			// document.getElementById("demo1").innerHTML = "Browser inner window width: " + w + ", height: " + h + ".";
+			// document.getElementById("agent").innerHTML = "User-agent header sent: " + x;
+
+			// Test if screes resolution is larger than 1130. Tesla full screen resolution is reported as w: 1111 h: 694
+			// Tesla browser when not in full screen is reported as 1130 as of 2021.4.x release
+			if (w >= 1130) {
+				document.getElementById("img1").style.display = "inline";
+				// Test if this is running on a Tesla. If so show the fullscreen button when not in fullscreen only
+				if (x.includes("Tesla")) {
+					// Simulate an HTTP redirect:
+					//	window.location.replace("https://www.youtube.com/redirect?q=" + url + "/");
+					// Change image property fron none to inline so it is displayed
+					//document.getElementById("agent").innerHTML = "Running in a Tesla Browser";
+					//	document.getElementById("img1").style.display = "inline";
+				}
+				else {
+					//document.getElementById("agent").innerHTML = "Running in a Generic Browser";
+				}
+			}
+		</script>
+	</main>
+</body>
+
+</html>
