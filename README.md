@@ -1,5 +1,7 @@
 # Cinoche
 
+<https://cinoche.github.io>
+
 Application web qui presente une liste de destinations pour ecouter des videos via un browser WEB.
 
 Elle contient les sources videos pertinantes au Quebec et qui sont connue pour fonctionner dans les voitures Tesla.
