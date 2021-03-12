@@ -4,6 +4,8 @@
 
 Application web qui presente une liste de destinations pour ecouter des videos via un browser WEB.
 
+Cette application est ecrite principalement pour les vehicules Tesla avec ecrans landscape.
+
 Elle contient les sources videos pertinantes au Quebec et qui sont connue pour fonctionner dans les voitures Tesla.
 
 Vous pouvez aussi passer un parametre pour ajouter des destinations dynamiquement via le URL:
