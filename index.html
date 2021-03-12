@@ -63,11 +63,13 @@
 
 		<div id="myURL"
 			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: white; border:1px solid black; box-shadow: 0px 0px 30px 10px #000000;">
-			<input style="font-size:x-large; border: 1px solid white; width: 95%;" type="text" id="myURLText"
-				value="http://" onkeypress="navigate(event)"><button style="float: right; font-size:x-large;"
+			<input style="font-size:large; border: 1px solid white; width: 95%;" type="text" id="myURLText"
+				value="http://" onkeypress="navigate(event)">
+			<button
+				style="float: right; font-size:large; margin: 0; position: absolute; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);"
 				onclick="navigateOK()">Go</button>
 		</div>
-		<div style="position:fixed; bottom: 10; right: 0;">
+		<div style="position:fixed; bottom: 0; right: 0;">
 			<a onclick="divFullscreen('info')"><img src="logos/info.png"></a>
 		</div>
 		<div id="info"
