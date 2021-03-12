@@ -8,7 +8,7 @@ html, body {
 body {
 	color: rgb(187, 184, 184);
 	margin: 0;
-	padding: 8px;
+	padding: 0px;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
@@ -30,16 +30,24 @@ label {
 	display: block;
 }
 
-input, button, select, textarea {
+button, select, textarea {
 	font-family: inherit;
 	font-size: inherit;
-	-webkit-padding: 0.4em 0;
-	padding: 0.4em;
-	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 2px;
 }
+
+input {
+	font-family: inherit;
+	font-size: inherit;
+	border-radius: 2px;
+	border-top-style: hidden;
+	border-right-style: hidden;
+	border-left-style: hidden;
+	border-bottom-style: hidden;
+	outline: none;
+  }
 
 input:disabled {
 	color: #ccc;
