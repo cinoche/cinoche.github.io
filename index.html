@@ -54,16 +54,25 @@
 					hspace="20" vspace="10" class="svelte-16wde2k"></a>
 			<a href="https://www.youtube.com"><img src="logos/youtube.jpg" alt="Youtube" align="middle" hspace="20"
 					vspace="10" class="svelte-16wde2k"></a>
-			<a onclick="divOverlay()"><img align="middle" hspace="20" vspace="10" width=10%
+			<a onclick="divOverlay('myURL')"><img align="middle" hspace="20" vspace="10" width=10%
 					src="logos/chromium.png"></a>
 		</p>
 
 		<div id="myURL"
-			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%">
+			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: white; border:1px solid black;">
 			<input style="border: 1px solid white; width: 100%;" type="text" id="myURLText" value="http://"
 				onkeypress="navigate(event)">
 		</div>
-		<p id="resolution"></p>
+		<div id="info"
+			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: black; border:1px solid white;">
+
+			<p id="resolution"></p>
+			<p id="agent"></p>
+			<button onclick="divOverlay('info')">Close</button>
+		</div>
+		<div style="position:fixed; bottom: 0; right: 0;">
+			<a onclick="divOverlay('info')"><img src="logos/info.png"></a>
+		</div>
 
 		<script>
 			var w = window.innerWidth
@@ -78,8 +87,8 @@
 			var url = window.location.href;
 
 
-			// document.getElementById("resolution").innerHTML = "Browser inner window width: " + w + ", height: " + h + ".";
-			// document.getElementById("agent").innerHTML = "User-agent header sent: " + x;
+			document.getElementById("resolution").innerHTML = "Browser inner window width: " + w + ", height: " + h + ".";
+			document.getElementById("agent").innerHTML = "User-agent header sent: " + x;
 
 			// Test if screes resolution is larger than 1130. Tesla full screen resolution is reported as w: 1111 h: 694
 			// Tesla browser when not in full screen is reported as 1130 as of 2021.4.x release
@@ -98,8 +107,8 @@
 				}
 			}
 
-			function divOverlay() {
-				var x = document.getElementById("myURL");
+			function divOverlay(name) {
+				var x = document.getElementById(name);
 				if (x.style.display === "none") {
 					x.style.display = "block";
 				} else {
@@ -112,6 +121,38 @@
 					var url = document.getElementById("myURLText");
 					window.location.replace(url.value);
 				}
+			}
+
+			function getUrlVars() {
+				var vars = {};
+				var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+					vars[key] = value;
+				});
+				return vars;
+			}
+
+			function getUrlParam(parameter, defaultvalue) {
+				var urlparameter = defaultvalue;
+				if (window.location.href.indexOf(parameter) > -1) {
+					urlparameter = getUrlVars()[parameter];
+				}
+				return urlparameter;
+			}
+
+			// Add the ability to set the default URL value to an externally provided URL variable like:
+			//
+			// https://cinoche.github.io/?url=http://some.url.com
+			//
+			// otherwise the default will remain: http://
+			//
+			var reveivedURL = getUrlParam('url', 'Empty');
+
+			// alert(reveivedURL);
+			if (!(reveivedURL === 'Empty')) {
+				//alert("Setting URL: " + reveivedURL);
+				const urlDefaultValue = document.getElementById("myURLText");
+				// setting the value
+				urlDefaultValue.value = reveivedURL;
 			}
 		</script>
 	</main>
