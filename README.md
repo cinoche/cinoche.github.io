@@ -12,6 +12,7 @@ Elle contient les sources videos pertinantes au Quebec et qui sont connue pour f
 * Disney+
 * HBOGO
 * BellTV
+* DAZN
 * Netflix
 * noovo
 * Paramount+

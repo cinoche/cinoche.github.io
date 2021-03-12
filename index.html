@@ -10,6 +10,13 @@
 	<link rel="icon" type="image/png" href="favicon.png">
 	<link rel="stylesheet" href="global.css">
 </head>
+<style>
+	#myURL {
+		width: 100%;
+		text-align: left;
+		background-color: white;
+	}
+</style>
 
 <body style="background-color:black;" data-new-gr-c-s-check-loaded="14.980.0" data-gr-ext-installed="">
 
@@ -47,7 +54,17 @@
 					hspace="20" vspace="10" class="svelte-16wde2k"></a>
 			<a href="https://www.youtube.com"><img src="logos/youtube.jpg" alt="Youtube" align="middle" hspace="20"
 					vspace="10" class="svelte-16wde2k"></a>
+			<a onclick="divOverlay()">
+				<figure>
+					<img align="middle" hspace="20" vspace="10" class="svelte-16wde2k" src="logos/chromium.jpg">
+				</figure>
+			</a>
 		</p>
+
+		<div id="myURL" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%">
+			<input style="border: 1px solid white; width: 100%;" type="text" id="myURLText"
+				value="https://" onkeypress="navigate(event)">
+		</div>
 		<p id="resolution"></p>
 
 		<script>
@@ -80,6 +97,22 @@
 				}
 				else {
 					//document.getElementById("agent").innerHTML = "Running in a Generic Browser";
+				}
+			}
+
+			function divOverlay() {
+				var x = document.getElementById("myURL");
+				if (x.style.display === "none") {
+					x.style.display = "block";
+				} else {
+					x.style.display = "none";
+				}
+			}
+
+			function navigate(event) {
+				if (event.keyCode == 13) {
+					var url = document.getElementById("myURLText");
+					window.location.replace(url.value);
 				}
 			}
 		</script>
