@@ -21,50 +21,49 @@
 <body style="background-color:black;" data-new-gr-c-s-check-loaded="14.980.0" data-gr-ext-installed="">
 
 	<main class="svelte-16wde2k">
-		<p><a href="https://www.youtube.com/redirect?q=https://cinoche.github.io/"><img style="display:none" id="img1"
-					src="logos/fullscreen.jpg" alt="GO FULL SCREEN" width=10%></a></p>
-		<p></p>
-		<p><a href="https://www.crave.ca/en"><img src="logos/crave.png" alt="Crave" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.disneyplus.com/fr-ca/login"><img src="logos/disney.svg" alt="Disney+" align="middle"
-					hspace="20" vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.crave.ca/en/hbo"><img src="logos/hbogo.gif" alt="HBO" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.dazn.com/"><img src="logos/dazn.png" alt="DAZN" align="middle" hspace="20" vspace="10"
-					width=10%></a>
-			<a href="https://tv.bell.ca/"><img src="logos/bell.png" alt="Bell Fibe TV" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://netflix.com/"><img src="logos/netflix.png" alt="Tubi TV" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://noovo.ca/"><img src="logos/noovo.png" alt="Tubi TV" align="middle" hspace="20" vspace="10"
-					class="svelte-16wde2k"></a>
-			<a href="https://www.paramountplus.com/ca/"><img src="logos/paramountplus.png" alt="Paramount+"
-					align="middle" hspace="20" vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.primevideo.com"><img src="logos/prime.svg" alt="Amazon Prime" align="middle"
-					hspace="20" vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://ici.tou.tv/"><img src="logos/toutv.png" alt="TouTV" align="middle" hspace="20" vspace="10"
-					class="svelte-16wde2k"></a>
-			<a href="https://tubitv.com/"><img src="logos/tubitv.gif" alt="Tubi TV" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.qub.ca/tvaplus"><img src="logos/tvaplus.svg" alt="Twitch" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.twitch.com"><img src="logos/twitch.png" alt="Twitch" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://tv.virginmobile.ca/"><img src="logos/virginmobile.svg" alt="Twitch" align="middle"
-					hspace="20" vspace="10" class="svelte-16wde2k"></a>
-			<a href="https://www.youtube.com"><img src="logos/youtube.jpg" alt="Youtube" align="middle" hspace="20"
-					vspace="10" class="svelte-16wde2k"></a>
-			<a onclick="divOverlay('myURL')"><img align="middle" hspace="20" vspace="10" width=10%
-					src="logos/chromium.png"></a>
+		<div id="fullscreen"
+			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; background: white; border:1px solid black; box-shadow: 0px 0px 30px 10px #000000;">
+			<p><a href="https://www.youtube.com/redirect?q=https://cinoche.github.io/"><img src="logos/fullscreen.jpg"
+						alt="GO FULL SCREEN" width=10%></a></p>
+			<p>Cinoche n'est pas en plein ecran. Une meilleur experience vous attend en plein ecran.</p>
+			<p>Voulez-vous passer en plein ecran?</p>
+			<p><button
+					onclick="window.location.replace('https\://www.youtube.com/redirect?q=' + url + '/')">Oui</button>
+					<button
+					onclick="divOverlay('fullscreen')">Non</button></p>
+		</div>
+		<p>
+			<a href="https://tv.bell.ca/"><img src="logos250/bell.png" alt="Bell Fibe TV" align="middle" width=20%></a>
+			<a href="https://www.crave.ca/en"><img src="logos250/crave.png" alt="Crave" align="middle" width=20%></a>
+			<a href="https://www.disneyplus.com/fr-ca/login"><img src="logos250/disneyplus.png" alt="Disney+"
+					align="middle" width=20%></a>
+			<a href="https://www.crave.ca/en/hbo"><img src="logos250/hbogo.png" alt="HBO" align="middle" width=20%></a>
+			<a href="https://www.dazn.com/"><img src="logos250/dazn.png" alt="DAZN" align="middle" width=20%></a>
+			<a href="https://netflix.com/"><img src="logos250/netflix.png" alt="Tubi TV" align="middle" width=20%"></a>
+			<a href="https://noovo.ca/"><img src="logos250/noovo.png" alt="Tubi TV" align="middle" width=20%></a>
+			<a href="https://www.paramountplus.com/ca/"><img src="logos250/paramountplus.png" alt="Paramount+"
+					align="middle" width=20%></a>
+			<a href="https://www.primevideo.com"><img src="logos250/prime.png" alt="Amazon Prime" align="middle"
+					width=20%></a>
+			<a href="https://ici.tou.tv/"><img src="logos250/toutv.png" alt="TouTV" align="middle" width=20%></a>
+			<a href="https://tubitv.com/"><img src="logos250/tubitv.png" alt="Tubi TV" align="middle" width=20%></a>
+			<a href="https://www.qub.ca/tvaplus"><img src="logos250/tvaplus.png" alt="Twitch" align="middle"
+					width=20%></a>
+			<a href="https://www.twitch.com"><img src="logos250/twitch.png" alt="Twitch" align="middle" width=20%></a>
+			<a href="https://tv.virginmobile.ca/"><img src="logos250/virgintv.png" alt="Twitch" align="middle"
+					width=20%></a>
+			<a href="https://www.youtube.com"><img src="logos250/youtube.png" alt="Youtube" align="middle"
+					width=20%></a>
+			<a onclick="divOverlay('myURL')"><img align="middle" width=20% src="logos250/chromium.png"></a>
 		</p>
 
 		<div id="myURL"
-			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: white; border:1px solid black;">
+			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: white; border:1px solid black; box-shadow: 0px 0px 30px 10px #000000;">
 			<input style="border: 1px solid white; width: 100%;" type="text" id="myURLText" value="http://"
 				onkeypress="navigate(event)">
 		</div>
 		<div id="info"
-			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: black; border:1px solid white;">
+			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; background: black; border:1px solid white; box-shadow: 0px 0px 30px 10px #000000;">
 
 			<p id="resolution"></p>
 			<p id="agent"></p>
@@ -96,7 +95,7 @@
 			// Test if screes resolution is larger than 1130. Tesla full screen resolution is reported as w: 1111 h: 694
 			// Tesla browser when not in full screen is reported as 1130 as of 2021.4.x release
 			if (w >= 1130) {
-				document.getElementById("img1").style.display = "inline";
+				document.getElementById("fullscreen").style.display = "inline";
 				// Test if this is running on a Tesla. If so show the fullscreen button when not in fullscreen only
 				if (x.includes("Tesla")) {
 					// Simulate an HTTP redirect:
