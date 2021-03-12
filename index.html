@@ -25,12 +25,12 @@
 			style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: black; background: white; border:1px solid black; box-shadow: 0px 0px 30px 10px #000000;">
 			<p><a href="https://www.youtube.com/redirect?q=https://cinoche.github.io/"><img src="logos/fullscreen.jpg"
 						alt="GO FULL SCREEN" width=10%></a></p>
-			<p>Cinoche n'est pas en plein ecran. Une meilleur experience vous attend en plein ecran.</p>
-			<p>Voulez-vous passer en plein ecran?</p>
+			<p>Cinoche n'est pas en plein ecran.</p>
+			<p>Pour une meilleur experience voulez-vous passer en plein ecran?</p>
 			<p><button
 					onclick="window.location.replace('https\://www.youtube.com/redirect?q=' + url + '/')">Oui</button>
-					<button
-					onclick="divOverlay('fullscreen')">Non</button></p>
+				<button onclick="divOverlay('fullscreen')">Non</button>
+			</p>
 		</div>
 		<p>
 			<a href="https://tv.bell.ca/"><img src="logos250/bell.png" alt="Bell Fibe TV" align="middle" width=20%></a>
@@ -94,7 +94,7 @@
 
 			// Test if screes resolution is larger than 1130. Tesla full screen resolution is reported as w: 1111 h: 694
 			// Tesla browser when not in full screen is reported as 1130 as of 2021.4.x release
-			if (w >= 1130) {
+			if (w >= 1130 && x.includes("Tesla")) {
 				document.getElementById("fullscreen").style.display = "inline";
 				// Test if this is running on a Tesla. If so show the fullscreen button when not in fullscreen only
 				if (x.includes("Tesla")) {
