@@ -147,7 +147,7 @@
 			function navigate(event) {
 				if (event.keyCode == 13) {
 					var url = document.getElementById("myURLText");
-					window.location.replace(url.value);
+					window.location.replace(encodeURIComponent(url.value));
 				}
 			}
 
@@ -180,7 +180,7 @@
 				//alert("Setting URL: " + reveivedURL);
 				const urlDefaultValue = document.getElementById("myURLText");
 				// setting the value
-				urlDefaultValue.value = reveivedURL;
+				urlDefaultValue.value = decodeURIComponent(reveivedURL);
 			}
 		</script>
 	</main>
