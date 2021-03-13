@@ -11,7 +11,6 @@ var h = window.innerHeight
 var x = navigator.userAgent;
 var url = window.location.href;
 
-
 document.getElementById("resolution").innerHTML = "Browser inner window width: " + w + ", height: " + h + ".";
 document.getElementById("agent").innerHTML = "User-agent header sent: " + x;
 document.getElementById("version").innerHTML = "Cinoche version: " + version;
@@ -21,7 +20,7 @@ document.getElementById("project").innerHTML = project;
 // Tesla browser when not in full screen is reported as 1130 as of 2021.4.x release
 //if (w >= 1130 && x.includes("Tesla")) {
 if (w >= 1130) {
-    divFullscreen('fullscreen')
+    divOverlay('fullscreen')
     //document.getElementById("fullscreen").style.display = "inline";
     // Test if this is running on a Tesla. If so show the fullscreen button when not in fullscreen only
     if (x.includes("Tesla")) {
@@ -36,7 +35,7 @@ if (w >= 1130) {
     }
 }
 
-function divOverlay(name) {
+function divDisplayToggle(name) {
     var x = document.getElementById(name);
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -45,23 +44,23 @@ function divOverlay(name) {
     }
 }
 
-function divOverlayOff(name) {
+function divDisplayOff(name) {
     var x = document.getElementById(name);
     if (x.style.display === "block") {
         x.style.display = "none";
     }
 }
 
-function divFullscreen(name) {
-    divOverlay('overlay');
-    divOverlay(name);
+function divOverlay(name) {
+    divDisplayToggle('overlay');
+    divDisplayToggle(name);
 }
 
-function divOverlayAllOff() {
-    divOverlayOff('overlay');
-    divOverlayOff('fullscreen');
-    divOverlayOff('myURL');
-    divOverlayOff('info');
+function divDisplayAllOff() {
+    divDisplayOff('overlay');
+    divDisplayOff('fullscreen');
+    divDisplayOff('myURL');
+    divDisplayOff('info');
 }
 
 function navigate(event) {
