@@ -1,4 +1,4 @@
-var version = "1.0.3";
+var version = "1.0.4";
 var project = "Project location: <a href=\"https://github.com/cinoche/cinoche.github.io\">https://github.com/cinoche/cinoche.github.io</a>";
 var w = window.innerWidth
     || document.documentElement.clientWidth
