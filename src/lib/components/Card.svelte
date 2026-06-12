@@ -47,7 +47,9 @@
   .card:hover .inner,
   .card:focus-visible .inner {
     transform: scale(1.035);
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
+    box-shadow:
+      0 8px 22px rgba(0, 0, 0, 0.35),
+      0 18px 50px rgba(0, 0, 0, 0.4);
   }
 
   .art {

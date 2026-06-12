@@ -73,9 +73,9 @@
     gap: 16px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    scroll-padding: 12px;
-    padding: 12px 12px 18px;
-    margin: -12px -12px -4px;
+    scroll-padding: 24px;
+    padding: 24px 24px 44px;
+    margin: -24px -24px -30px;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
@@ -124,7 +124,9 @@
   .card:focus-visible .inner {
     transform: scale(1.035);
     border-color: var(--accent);
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
+    box-shadow:
+      0 8px 22px rgba(0, 0, 0, 0.35),
+      0 18px 50px rgba(0, 0, 0, 0.4);
   }
 
   .art {

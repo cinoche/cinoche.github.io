@@ -1,18 +1,22 @@
 <!-- Hover effect: a comet head travelling around the card border via
-     CSS Motion Path, trailing dust particles that puff outward and fade.
-     A faint rotating conic ring keeps the border defined. Shown via
-     .card:hover in the parent. Browsers without offset-path support
-     just get the ring. -->
+     CSS Motion Path, trailing pixie dust around the full perimeter.
+     Particles are phased along the whole loop with negative delays
+     (so none stack at the path origin) and fade/shrink/scatter the
+     further they are behind the head. Shown via .card:hover in the
+     parent. Browsers without offset-path support just get the ring. -->
 <script lang="ts">
-  const PERIOD = 2.4
-  // trailing dust: progressively behind the head, smaller, puffing
-  // outward on alternating sides
-  const dust = Array.from({ length: 9 }, (_, i) => ({
-    lag: 0.04 + i * 0.055,
-    size: 5 - i * 0.4,
-    out: (i % 2 ? 1 : -1) * (4 + i * 1.5),
-    puff: 0.55 + (i % 3) * 0.18,
-  }))
+  const PERIOD = 4.8
+  const N = 24
+  const dust = Array.from({ length: N }, (_, i) => {
+    const f = i / (N - 1) // 0 = right behind the head, 1 = full loop behind
+    return {
+      delay: -(PERIOD - (0.08 + f * PERIOD * 0.88)),
+      size: 5 - f * 3.4,
+      o: 0.85 * Math.pow(1 - f, 1.4) + 0.06,
+      out: (i % 2 ? 1 : -1) * (3 + f * 13),
+      scatterDur: 1.4 + ((i * 7) % 10) * 0.16,
+    }
+  })
 </script>
 
 <div class="fx" aria-hidden="true">
@@ -21,9 +25,9 @@
   {#each dust as d, i (i)}
     <span
       class="dust"
-      style="width:{d.size}px; height:{d.size}px; --out:{d.out}px;
-             animation-duration: {PERIOD}s, {d.puff}s;
-             animation-delay: {d.lag}s, 0s"
+      style="width:{d.size}px; height:{d.size}px; --o:{d.o}; --out:{d.out}px;
+             animation-duration: {PERIOD}s, {d.scatterDur}s;
+             animation-delay: {d.delay}s, {-(i * 0.37) % 2}s"
     ></span>
   {/each}
 </div>
@@ -35,7 +39,7 @@
     border-radius: calc(var(--radius-card) + 3px);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.25s ease;
   }
 
   :global(.card:hover) > .fx,
@@ -47,29 +51,8 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: conic-gradient(
-      from var(--orbit),
-      rgba(94, 177, 255, 0.16) 0deg,
-      rgba(94, 177, 255, 0.16) 300deg,
-      rgba(150, 200, 255, 0.55) 345deg,
-      rgba(94, 177, 255, 0.16) 360deg
-    );
-    padding: 2px;
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    animation: orbit 2.4s linear infinite;
-  }
-
-  @keyframes orbit {
-    to {
-      --orbit: 360deg;
-    }
+    border: 1px solid rgba(94, 177, 255, 0.22);
+    box-shadow: 0 0 14px rgba(94, 177, 255, 0.12) inset;
   }
 
   .head,
@@ -81,16 +64,16 @@
     .head {
       display: block;
       position: absolute;
-      width: 30px;
-      height: 5px;
+      width: 24px;
+      height: 4px;
       border-radius: 3px;
       background: linear-gradient(
         to left,
         #ffffff,
-        rgba(140, 195, 255, 0.9) 40%,
+        rgba(140, 195, 255, 0.9) 45%,
         transparent
       );
-      box-shadow: 0 0 12px 3px rgba(120, 180, 255, 0.85);
+      box-shadow: 0 0 12px 3px rgba(140, 195, 255, 0.85);
       offset-path: border-box;
       offset-rotate: auto;
       animation: travel linear infinite;
@@ -102,13 +85,13 @@
       border-radius: 50%;
       background: #fff;
       box-shadow:
-        0 0 6px 1px rgba(94, 177, 255, 0.9),
-        0 0 12px 4px rgba(94, 177, 255, 0.35);
+        0 0 5px 1px rgba(140, 195, 255, 0.8),
+        0 0 11px 3px rgba(94, 177, 255, 0.3);
       offset-path: border-box;
       offset-rotate: auto;
       animation:
         travel linear infinite,
-        puff ease-out infinite;
+        scatter ease-in-out infinite alternate;
     }
   }
 
@@ -122,15 +105,15 @@
   }
 
   /* translateY in the path-rotated frame pushes perpendicular to the
-     border, so the dust drifts away from the edge as it fades */
-  @keyframes puff {
-    0% {
+     border: the dust shimmers while slowly straying from the edge */
+  @keyframes scatter {
+    from {
       transform: translateY(0) scale(1);
-      opacity: 1;
+      opacity: var(--o);
     }
-    100% {
-      transform: translateY(var(--out)) scale(0.15);
-      opacity: 0;
+    to {
+      transform: translateY(var(--out)) scale(0.5);
+      opacity: calc(var(--o) * 0.3);
     }
   }
 </style>
