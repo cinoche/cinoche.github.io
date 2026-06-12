@@ -7,7 +7,7 @@
   import UrlLauncher from './lib/components/UrlLauncher.svelte'
   import type { Category } from './lib/data/services'
   import { i18n } from './lib/i18n.svelte'
-  import { getUrlParam, isLikelyNotFullscreen } from './lib/tesla'
+  import { getUrlParam, shouldPromptFullscreen } from './lib/tesla'
 
   let query = $state('')
   let category = $state<Category | 'all'>('all')
@@ -18,7 +18,7 @@
   let showInfo = $state(false)
   let showUrlLauncher = $state(sharedUrl !== null)
   // skip the fullscreen nag when deep-linking straight into the URL launcher
-  let showFullscreenPrompt = $state(sharedUrl === null && isLikelyNotFullscreen())
+  let showFullscreenPrompt = $state(sharedUrl === null && shouldPromptFullscreen())
 
   $effect(() => {
     document.documentElement.lang = i18n.locale

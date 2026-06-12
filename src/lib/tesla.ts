@@ -10,6 +10,12 @@ export function isTesla(): boolean {
   return navigator.userAgent.includes('Tesla')
 }
 
+// Only nag about fullscreen in an actual Tesla browser that isn't fullscreen;
+// desktop/phone visitors never see the prompt.
+export function shouldPromptFullscreen(): boolean {
+  return isTesla() && isLikelyNotFullscreen()
+}
+
 // Navigating to a youtube.com redirect makes the Tesla browser enter
 // theater (fullscreen) mode for the target site.
 export function goFullscreen(): void {
