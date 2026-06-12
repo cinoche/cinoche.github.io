@@ -1,6 +1,6 @@
-export type Background = 'gradient' | 'stars' | 'road' | 'aurora' | 'grid'
+export type Background = 'gradient' | 'stars' | 'road' | 'aurora' | 'grid' | 'random'
 
-export const backgrounds: Background[] = ['gradient', 'stars', 'road', 'aurora', 'grid']
+export const backgrounds: Background[] = ['gradient', 'stars', 'road', 'aurora', 'grid', 'random']
 
 const STORAGE_KEY = 'cinoche-bg'
 

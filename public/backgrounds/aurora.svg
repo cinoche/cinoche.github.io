@@ -4,23 +4,25 @@
       <stop offset="0" stop-color="#050810"/>
       <stop offset="1" stop-color="#0a0d1a"/>
     </linearGradient>
-    <filter id="blur60"><feGaussianBlur stdDeviation="60"/></filter>
-    <filter id="blur40"><feGaussianBlur stdDeviation="40"/></filter>
+    <radialGradient id="r1" cx="0.45" cy="0.5" r="0.55">
+      <stop offset="0" stop-color="rgba(20,81,74,0.5)"/>
+      <stop offset="0.55" stop-color="rgba(14,59,52,0.22)"/>
+      <stop offset="1" stop-color="rgba(14,59,52,0)"/>
+    </radialGradient>
+    <radialGradient id="r2" cx="0.6" cy="0.5" r="0.55">
+      <stop offset="0" stop-color="rgba(43,46,107,0.42)"/>
+      <stop offset="0.55" stop-color="rgba(28,95,99,0.16)"/>
+      <stop offset="1" stop-color="rgba(28,95,99,0)"/>
+    </radialGradient>
   </defs>
   <rect width="1920" height="1080" fill="url(#sky)"/>
-  <g filter="url(#blur60)">
-    <path d="M-100 500 Q 400 200 900 420 T 2020 350 L 2020 600 Q 1500 450 960 580 T -100 700 Z" fill="#0e3b34" opacity="0.55"/>
-    <path d="M-100 350 Q 500 100 1100 300 T 2020 200 L 2020 380 Q 1400 280 800 430 T -100 520 Z" fill="#14514a" opacity="0.35"/>
-  </g>
-  <g filter="url(#blur40)">
-    <path d="M200 250 Q 700 50 1300 220 T 2020 120 L 2020 240 Q 1400 160 800 300 T 200 380 Z" fill="#2b2e6b" opacity="0.30"/>
-  </g>
+  <ellipse cx="860" cy="280" rx="1100" ry="240" fill="url(#r1)"/>
+  <ellipse cx="1150" cy="430" rx="1150" ry="230" fill="url(#r2)"/>
   <g fill="#ffffff">
     <circle cx="200" cy="140" r="1.3" opacity="0.6"/><circle cx="450" cy="80" r="1.0" opacity="0.5"/>
     <circle cx="720" cy="160" r="1.4" opacity="0.7"/><circle cx="1000" cy="70" r="1.0" opacity="0.45"/>
     <circle cx="1260" cy="140" r="1.2" opacity="0.6"/><circle cx="1530" cy="60" r="1.5" opacity="0.75"/>
     <circle cx="1780" cy="170" r="1.0" opacity="0.5"/><circle cx="330" cy="700" r="0.9" opacity="0.35"/>
     <circle cx="880" cy="760" r="1.0" opacity="0.4"/><circle cx="1420" cy="720" r="0.9" opacity="0.35"/>
-    <circle cx="1690" cy="820" r="1.1" opacity="0.45"/><circle cx="120" cy="900" r="0.8" opacity="0.3"/>
   </g>
 </svg>

@@ -35,6 +35,7 @@ const dict = {
     'bg.road': 'Route',
     'bg.aurora': 'Aurore',
     'bg.grid': 'Grille',
+    'bg.random': 'Aléatoire',
     close: 'Fermer',
   },
   en: {
@@ -69,6 +70,7 @@ const dict = {
     'bg.road': 'Road',
     'bg.aurora': 'Aurora',
     'bg.grid': 'Grid',
+    'bg.random': 'Random',
     close: 'Close',
   },
 } as const

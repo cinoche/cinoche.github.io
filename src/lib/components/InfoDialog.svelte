@@ -35,7 +35,8 @@
         <span
           class="preview"
           class:gradient={bg === 'gradient'}
-          style={bg === 'gradient'
+          class:random={bg === 'random'}
+          style={bg === 'gradient' || bg === 'random'
             ? ''
             : `background-image: url('backgrounds/${bg}.svg')`}
         ></span>
@@ -129,6 +130,14 @@
       rgba(59, 130, 246, 0.5),
       transparent
     );
+  }
+
+  .preview.random {
+    background-color: #0a0d18;
+    background-image:
+      radial-gradient(22px 22px at 25% 35%, rgba(168, 85, 247, 0.55), transparent),
+      radial-gradient(26px 26px at 70% 60%, rgba(34, 197, 94, 0.45), transparent),
+      radial-gradient(20px 20px at 55% 25%, rgba(249, 115, 22, 0.45), transparent);
   }
 
   .close {

@@ -57,11 +57,13 @@ input {
   font: inherit;
 }
 
+/* pause (not shorten) animations: 0.01ms durations make infinite
+   alternate animations strobe at frame rate */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-play-state: paused !important;
     transition-duration: 0.01ms !important;
   }
 }

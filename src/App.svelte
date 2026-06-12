@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Background from './lib/components/Background.svelte'
   import CategoryRow from './lib/components/CategoryRow.svelte'
   import CategoryTabs from './lib/components/CategoryTabs.svelte'
   import FullscreenPrompt from './lib/components/FullscreenPrompt.svelte'
@@ -38,12 +39,7 @@
   })
 </script>
 
-{#if settings.background !== 'gradient'}
-  <div
-    class="bg"
-    style="background-image: url('backgrounds/{settings.background}.svg')"
-  ></div>
-{/if}
+<Background />
 
 <main>
   <TopBar bind:query onShowInfo={() => (showInfo = true)} />
@@ -72,14 +68,6 @@
 <FullscreenPrompt bind:open={showFullscreenPrompt} />
 
 <style>
-  .bg {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-size: cover;
-    background-position: center;
-  }
-
   main {
     max-width: 2200px;
     margin: 0 auto;
