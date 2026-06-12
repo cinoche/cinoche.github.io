@@ -1,29 +1,29 @@
-<!-- Hover effect: a comet orbiting the card border with a glowing halo
-     and dust sparkles that flash as it passes. Shown via .card:hover in
-     the parent. The orbit angle animates the global @property --orbit. -->
+<!-- Hover effect: a comet head travelling around the card border via
+     CSS Motion Path, trailing dust particles that puff outward and fade.
+     A faint rotating conic ring keeps the border defined. Shown via
+     .card:hover in the parent. Browsers without offset-path support
+     just get the ring. -->
 <script lang="ts">
-  // perimeter anchor points (top-centre = 0deg, clockwise) for the dust;
-  // each sparkle's delay lines up with the comet reaching its corner
-  const sparks = [
-    { x: 50, y: 0, t: 0 },
-    { x: 96, y: 4, t: 0.125 },
-    { x: 100, y: 50, t: 0.25 },
-    { x: 96, y: 96, t: 0.375 },
-    { x: 50, y: 100, t: 0.5 },
-    { x: 4, y: 96, t: 0.625 },
-    { x: 0, y: 50, t: 0.75 },
-    { x: 4, y: 4, t: 0.875 },
-  ]
   const PERIOD = 2.4
+  // trailing dust: progressively behind the head, smaller, puffing
+  // outward on alternating sides
+  const dust = Array.from({ length: 9 }, (_, i) => ({
+    lag: 0.04 + i * 0.055,
+    size: 5 - i * 0.4,
+    out: (i % 2 ? 1 : -1) * (4 + i * 1.5),
+    puff: 0.55 + (i % 3) * 0.18,
+  }))
 </script>
 
 <div class="fx" aria-hidden="true">
-  <div class="halo"></div>
   <div class="ring"></div>
-  {#each sparks as s, i (i)}
+  <span class="head" style="animation-duration: {PERIOD}s"></span>
+  {#each dust as d, i (i)}
     <span
-      class="spark"
-      style="left:{s.x}%; top:{s.y}%; animation-delay:{s.t * PERIOD}s; animation-duration:{PERIOD}s"
+      class="dust"
+      style="width:{d.size}px; height:{d.size}px; --out:{d.out}px;
+             animation-duration: {PERIOD}s, {d.puff}s;
+             animation-delay: {d.lag}s, 0s"
     ></span>
   {/each}
 </div>
@@ -43,20 +43,18 @@
     opacity: 1;
   }
 
-  .ring,
-  .halo {
+  .ring {
     position: absolute;
     inset: 0;
     border-radius: inherit;
     background: conic-gradient(
       from var(--orbit),
-      transparent 0deg,
-      transparent 285deg,
-      rgba(94, 177, 255, 0.55) 330deg,
-      #dceaff 357deg,
-      #ffffff 360deg
+      rgba(94, 177, 255, 0.16) 0deg,
+      rgba(94, 177, 255, 0.16) 300deg,
+      rgba(150, 200, 255, 0.55) 345deg,
+      rgba(94, 177, 255, 0.16) 360deg
     );
-    padding: 3px;
+    padding: 2px;
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -68,48 +66,70 @@
     animation: orbit 2.4s linear infinite;
   }
 
-  .halo {
-    inset: -3px;
-    padding: 9px;
-    filter: blur(5px);
-    opacity: 0.8;
-  }
-
   @keyframes orbit {
     to {
       --orbit: 360deg;
     }
   }
 
-  .spark {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #fff;
-    transform: translate(-50%, -50%) scale(0);
-    box-shadow:
-      0 0 8px 2px rgba(94, 177, 255, 0.9),
-      0 0 16px 5px rgba(94, 177, 255, 0.4);
-    animation: sparkle linear infinite;
+  .head,
+  .dust {
+    display: none;
   }
 
-  @keyframes sparkle {
-    0% {
-      transform: translate(-50%, -50%) scale(0);
-      opacity: 0;
+  @supports (offset-path: border-box) {
+    .head {
+      display: block;
+      position: absolute;
+      width: 30px;
+      height: 5px;
+      border-radius: 3px;
+      background: linear-gradient(
+        to left,
+        #ffffff,
+        rgba(140, 195, 255, 0.9) 40%,
+        transparent
+      );
+      box-shadow: 0 0 12px 3px rgba(120, 180, 255, 0.85);
+      offset-path: border-box;
+      offset-rotate: auto;
+      animation: travel linear infinite;
     }
-    4% {
-      transform: translate(-50%, -50%) scale(1.4);
+
+    .dust {
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow:
+        0 0 6px 1px rgba(94, 177, 255, 0.9),
+        0 0 12px 4px rgba(94, 177, 255, 0.35);
+      offset-path: border-box;
+      offset-rotate: auto;
+      animation:
+        travel linear infinite,
+        puff ease-out infinite;
+    }
+  }
+
+  @keyframes travel {
+    from {
+      offset-distance: 0%;
+    }
+    to {
+      offset-distance: 100%;
+    }
+  }
+
+  /* translateY in the path-rotated frame pushes perpendicular to the
+     border, so the dust drifts away from the edge as it fades */
+  @keyframes puff {
+    0% {
+      transform: translateY(0) scale(1);
       opacity: 1;
     }
-    18% {
-      transform: translate(-50%, -50%) scale(0.4) translateY(-7px);
-      opacity: 0.5;
-    }
-    30%,
     100% {
-      transform: translate(-50%, -50%) scale(0);
+      transform: translateY(var(--out)) scale(0.15);
       opacity: 0;
     }
   }

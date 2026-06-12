@@ -80,7 +80,7 @@
       rgba(14, 59, 52, 0.26) 55%,
       transparent 75%
     );
-    animation: drift1 13s ease-in-out infinite alternate;
+    animation: drift1 11s ease-in-out infinite alternate;
   }
 
   .r2 {
@@ -91,7 +91,7 @@
       rgba(28, 95, 99, 0.18) 55%,
       transparent 75%
     );
-    animation: drift2 17s ease-in-out infinite alternate;
+    animation: drift2 21s ease-in-out infinite alternate;
   }
 
   .r3 {
@@ -102,7 +102,7 @@
       rgba(43, 46, 107, 0.14) 55%,
       transparent 75%
     );
-    animation: drift3 22s ease-in-out infinite alternate;
+    animation: drift3 34s ease-in-out infinite alternate;
   }
 
   .r4 {

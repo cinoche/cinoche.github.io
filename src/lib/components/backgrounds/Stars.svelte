@@ -1,27 +1,43 @@
 <script lang="ts">
   import { scrollY } from 'svelte/reactivity/window'
 
-  const stars = Array.from({ length: 70 }, () => ({
-    x: Math.random() * 100,
-    y: Math.random() * 90,
-    r: 1 + Math.random() * 2.6,
-    dur: 4 + Math.random() * 5,
-    delay: -Math.random() * 9,
-  }))
+  const makeStars = (count: number, rMin: number, rMax: number) =>
+    Array.from({ length: count }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 90,
+      r: rMin + Math.random() * (rMax - rMin),
+      dur: 4 + Math.random() * 5,
+      delay: -Math.random() * 9,
+    }))
+
+  // two star depths drifting at different speeds and directions
+  const farStars = makeStars(45, 0.8, 2)
+  const nearStars = makeStars(25, 2, 3.6)
 
   const y = $derived(scrollY.current ?? 0)
 </script>
 
 <div class="scene">
   <div class="layer" style="transform: translate3d(0, {-y * 0.05}px, 0)">
-    {#each stars as s, i (i)}
-      <span
-        class="star"
-        style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
-               animation-duration:{s.dur}s; animation-delay:{s.delay}s"
-      ></span>
-    {/each}
-    <span class="shooting"></span>
+    <div class="drift slow">
+      {#each farStars as s, i (i)}
+        <span
+          class="star"
+          style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
+                 animation-duration:{s.dur}s; animation-delay:{s.delay}s"
+        ></span>
+      {/each}
+    </div>
+    <div class="drift fast">
+      {#each nearStars as s, i (i)}
+        <span
+          class="star"
+          style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
+                 animation-duration:{s.dur}s; animation-delay:{s.delay}s"
+        ></span>
+      {/each}
+      <span class="shooting"></span>
+    </div>
   </div>
 
   <div class="layer" style="transform: translate3d(0, {-y * 0.12}px, 0)">
@@ -57,6 +73,37 @@
     inset: 0;
     height: 160vh;
     will-change: transform;
+  }
+
+  .drift {
+    position: absolute;
+    inset: 0;
+  }
+
+  .drift.slow {
+    animation: driftL 70s ease-in-out infinite alternate;
+  }
+
+  .drift.fast {
+    animation: driftR 38s ease-in-out infinite alternate;
+  }
+
+  @keyframes driftL {
+    from {
+      transform: translateX(-1.5vw);
+    }
+    to {
+      transform: translateX(1.5vw);
+    }
+  }
+
+  @keyframes driftR {
+    from {
+      transform: translateX(2.5vw);
+    }
+    to {
+      transform: translateX(-2.5vw);
+    }
   }
 
   .star {

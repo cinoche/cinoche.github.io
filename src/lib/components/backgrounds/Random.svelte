@@ -16,7 +16,9 @@
   const bgBottom = `hsl(${(baseHue + 40) % 360} 40% 9%)`
 
   // two depth groups for parallax: far (small, slow) and near (big, faster)
-  const makeOrbs = (count: number, scale: number) =>
+  // far orbs are small and slow, near orbs big and fast: the speed
+  // difference is what sells the depth
+  const makeOrbs = (count: number, scale: number, durMin: number, durMax: number) =>
     Array.from({ length: count }, () => ({
       hue: pick(),
       size: (110 + Math.random() * 300) * scale,
@@ -24,13 +26,13 @@
       y: Math.random() * 140,
       dx: (-20 + Math.random() * 40) * scale,
       dy: (-16 + Math.random() * 32) * scale,
-      dur: 9 + Math.random() * 14,
+      dur: durMin + Math.random() * (durMax - durMin),
       delay: -Math.random() * 23,
       opacity: 0.3 + Math.random() * 0.25,
     }))
 
-  const farOrbs = makeOrbs(6, 0.7)
-  const nearOrbs = makeOrbs(7, 1.15)
+  const farOrbs = makeOrbs(6, 0.7, 26, 48)
+  const nearOrbs = makeOrbs(7, 1.15, 8, 16)
 
   const stars = Array.from({ length: 35 }, () => ({
     x: Math.random() * 100,

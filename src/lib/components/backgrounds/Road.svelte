@@ -14,13 +14,15 @@
 
 <div class="scene">
   <div class="layer" style="transform: translate3d(0, {-y * 0.04}px, 0)">
-    {#each stars as s, i (i)}
-      <span
-        class="star"
-        style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
-               animation-duration:{s.dur}s; animation-delay:{s.delay}s"
-      ></span>
-    {/each}
+    <div class="drift">
+      {#each stars as s, i (i)}
+        <span
+          class="star"
+          style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
+                 animation-duration:{s.dur}s; animation-delay:{s.delay}s"
+        ></span>
+      {/each}
+    </div>
   </div>
 
   <div class="layer" style="transform: translate3d(0, {-y * 0.1}px, 0)">
@@ -49,6 +51,21 @@
     inset: 0;
     height: 150vh;
     will-change: transform;
+  }
+
+  .drift {
+    position: absolute;
+    inset: 0;
+    animation: driftX 55s ease-in-out infinite alternate;
+  }
+
+  @keyframes driftX {
+    from {
+      transform: translateX(-2vw);
+    }
+    to {
+      transform: translateX(2vw);
+    }
   }
 
   .star {

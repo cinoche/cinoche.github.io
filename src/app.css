@@ -67,12 +67,13 @@ input {
 
 /* pause (not shorten) animations: 0.01ms durations make infinite
    alternate animations strobe at frame rate. Background scenes
-   (.scene) are exempt - they are the app's aesthetic and stay
-   animated; the Gradient background is the static choice. */
+   (.scene) and the card hover effect (.fx) are exempt - they are
+   the app's aesthetic and stay animated; the Gradient background
+   is the static choice. */
 @media (prefers-reduced-motion: reduce) {
-  *:not(.scene, .scene *),
-  *:not(.scene, .scene *)::before,
-  *:not(.scene, .scene *)::after {
+  *:not(.scene, .scene *, .fx, .fx *),
+  *:not(.scene, .scene *, .fx, .fx *)::before,
+  *:not(.scene, .scene *, .fx, .fx *)::after {
     animation-play-state: paused !important;
     transition-duration: 0.01ms !important;
   }
