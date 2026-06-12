@@ -33,15 +33,17 @@
     position: relative;
     display: block;
     height: clamp(220px, 34vh, 360px);
-    border-radius: calc(var(--radius) + 6px);
+    border-radius: calc(var(--radius-card) + 4px);
     overflow: hidden;
-    border: 1px solid var(--border);
-    transition: border-color 0.18s ease;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+    transition: box-shadow 0.18s ease;
   }
 
   .hero:hover,
   .hero:focus-visible {
-    border-color: var(--accent);
+    box-shadow:
+      0 0 0 2px var(--accent),
+      0 12px 36px rgba(0, 0, 0, 0.6);
     outline: none;
   }
 

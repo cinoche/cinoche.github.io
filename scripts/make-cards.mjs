@@ -22,6 +22,12 @@ const logos = readdirSync('public/logos').filter((f) => f.endsWith('.png'))
 
 const hashOf = (s) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
 
+// per-service tweaks: logo box colours that aren't near-black, brand
+// hues the logo doesn't carry, and bespoke pattern picks
+const BOX_DARK_MAX = { tsn: 115 }
+const HUE_OVERRIDE = { tsn: 358 }
+const PATTERN_OVERRIDE = { tsn: 'sports' }
+
 function rgbToHsl(r, g, b) {
   r /= 255; g /= 255; b /= 255
   const max = Math.max(r, g, b), min = Math.min(r, g, b)
@@ -39,7 +45,7 @@ function rgbToHsl(r, g, b) {
 // Many legacy logos are bright marks on an opaque black box (designed
 // for the old black page). Detect those by their borders and convert
 // near-black to transparency so they composite like real wordmarks.
-async function cleanLogo(logoPath) {
+async function cleanLogo(logoPath, darkMax = 45) {
   const { data, info } = await sharp(logoPath)
     .ensureAlpha()
     .raw()
@@ -52,7 +58,7 @@ async function cleanLogo(logoPath) {
   const check = (i) => {
     if (data[i + 3] > 200) {
       count++
-      if (Math.max(data[i], data[i + 1], data[i + 2]) < 45) dark++
+      if (Math.max(data[i], data[i + 1], data[i + 2]) < darkMax) dark++
     }
   }
   for (let x = 0; x < w; x += Math.max(1, w >> 5)) {
@@ -67,7 +73,8 @@ async function cleanLogo(logoPath) {
   if (!boxed) return sharp(logoPath).png().toBuffer()
   for (let i = 0; i < data.length; i += 4) {
     const m = Math.max(data[i], data[i + 1], data[i + 2])
-    data[i + 3] = Math.min(data[i + 3], Math.min(255, Math.round(m * 1.6)))
+    const lifted = Math.max(0, m - (darkMax > 45 ? darkMax : 0))
+    data[i + 3] = Math.min(data[i + 3], Math.min(255, Math.round((darkMax > 45 ? lifted * 2.2 : m * 1.6))))
   }
   return sharp(data, { raw: { width: w, height: h, channels: 4 } })
     .png()
@@ -104,6 +111,25 @@ async function analyse(logoInput) {
 function patternSvg(variant, hue) {
   const c = (a) => `hsla(${hue}, 70%, 60%, ${a})`
   switch (variant) {
+    case 'sports': // stadium floodlights + rink/pitch geometry + ball arc
+      return `<g>
+        <polygon points="0,0 ${W * 0.3},0 ${W * 0.52},${H}" fill="rgba(255,255,255,0.05)"/>
+        <polygon points="${W},0 ${W * 0.72},0 ${W * 0.45},${H}" fill="rgba(255,255,255,0.04)"/>
+        <g fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="3">
+          <circle cx="${W * 0.82}" cy="${H * 0.78}" r="150"/>
+          <circle cx="${W * 0.82}" cy="${H * 0.78}" r="46"/>
+          <line x1="${W * 0.82}" y1="${H * 0.3}" x2="${W * 0.82}" y2="${H * 1.1}"/>
+        </g>
+        <circle cx="${W * 0.82}" cy="${H * 0.78}" r="10" fill="${c(0.5)}"/>
+        <path d="M ${W * 0.04} ${H * 0.9} Q ${W * 0.22} ${H * 0.38} ${W * 0.46} ${H * 0.62}"
+          fill="none" stroke="${c(0.45)}" stroke-width="4" stroke-dasharray="2 18" stroke-linecap="round"/>
+        <circle cx="${W * 0.46}" cy="${H * 0.62}" r="9" fill="rgba(255,255,255,0.5)"/>
+        <g stroke="${c(0.25)}" stroke-width="3" stroke-linecap="round">
+          <line x1="${W * 0.05}" y1="${H * 0.18}" x2="${W * 0.16}" y2="${H * 0.15}"/>
+          <line x1="${W * 0.03}" y1="${H * 0.24}" x2="${W * 0.18}" y2="${H * 0.2}"/>
+          <line x1="${W * 0.06}" y1="${H * 0.3}" x2="${W * 0.15}" y2="${H * 0.27}"/>
+        </g>
+      </g>`
     case 0: // rings
       return `<g fill="none" stroke="${c(0.10)}" stroke-width="3">
         <circle cx="${W * 0.85}" cy="${H * 0.2}" r="170"/>
@@ -135,10 +161,13 @@ function patternSvg(variant, hue) {
 }
 
 async function brandedCard(id, logoPath) {
-  const logo = await cleanLogo(logoPath)
-  const { hue, colored, coverage } = await analyse(logo)
+  const logo = await cleanLogo(logoPath, BOX_DARK_MAX[id])
+  const analysed = await analyse(logo)
+  const hue = HUE_OVERRIDE[id] ?? analysed.hue
+  const colored = HUE_OVERRIDE[id] !== undefined || analysed.colored
+  const { coverage } = analysed
   const h = hashOf(id)
-  const variant = h % 5
+  const variant = PATTERN_OVERRIDE[id] ?? h % 5
   const glowX = 0.25 + ((h >> 3) % 50) / 100 // 0.25 - 0.75
   const sat = colored ? 45 : 25
   const bg = Buffer.from(`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
@@ -205,11 +234,20 @@ async function brandedCard(id, logoPath) {
   return sharp(bg).composite(layers)
 }
 
+// optional arg regenerates a single service: node scripts/make-cards.mjs tsn
+const only = process.argv[2]
+
 for (const f of logos) {
   const id = f.replace('.png', '')
+  if (only && id !== only) continue
   const og = `tmp-cards/${id}.img`
   let img
-  if (useOg.has(id) && existsSync(og)) {
+  if (useOg.has(id)) {
+    if (!existsSync(og)) {
+      // don't silently downgrade promo-art cards to generated ones
+      console.warn(`skip ${id}: og art missing in tmp-cards/ (re-harvest first)`)
+      continue
+    }
     img = sharp(og).resize(W, H, { fit: 'cover', position: 'attention' })
   } else {
     img = await brandedCard(id, `public/logos/${f}`)

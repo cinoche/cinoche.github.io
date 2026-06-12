@@ -87,12 +87,13 @@
     flex: 0 0 auto;
     width: clamp(220px, 16vw, 360px);
     aspect-ratio: 16 / 9;
-    border-radius: var(--radius);
+    border-radius: var(--radius-card);
     overflow: hidden;
     border: 1px dashed var(--border);
     background: var(--surface);
     scroll-snap-align: start;
     padding: 0;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
     transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   }
 
@@ -104,7 +105,7 @@
   .card:focus-visible {
     transform: scale(1.035);
     border-color: var(--accent);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
     outline: none;
     z-index: 1;
   }
