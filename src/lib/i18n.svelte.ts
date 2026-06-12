@@ -28,6 +28,7 @@ const dict = {
     'fs.question': 'Pour une meilleure expérience, voulez-vous passer en plein écran?',
     'fs.yes': 'Oui',
     'fs.no': 'Non',
+    fullscreen: 'Plein écran',
     close: 'Fermer',
   },
   en: {
@@ -55,6 +56,7 @@ const dict = {
     'fs.question': 'For a better experience, would you like to switch to fullscreen?',
     'fs.yes': 'Yes',
     'fs.no': 'No',
+    fullscreen: 'Fullscreen',
     close: 'Close',
   },
 } as const

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { i18n } from '../i18n.svelte'
+  import { goFullscreen } from '../tesla'
 
   let {
     query = $bindable(),
@@ -24,6 +25,14 @@
   />
 
   <div class="actions">
+    <button
+      class="fullscreen"
+      onclick={goFullscreen}
+      aria-label={i18n.t('fullscreen')}
+      title={i18n.t('fullscreen')}
+    >
+      ⛶
+    </button>
     <button class="lang" onclick={i18n.toggle}>
       {i18n.locale === 'fr' ? 'EN' : 'FR'}
     </button>
@@ -103,5 +112,10 @@
   .info {
     font-style: italic;
     font-family: Georgia, serif;
+  }
+
+  .fullscreen {
+    font-size: 22px;
+    line-height: 1;
   }
 </style>
