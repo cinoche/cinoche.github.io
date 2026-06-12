@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { scrollY } from 'svelte/reactivity/window'
+
   const stars = Array.from({ length: 30 }, () => ({
     x: Math.random() * 100,
     y: Math.random() * 50,
@@ -6,22 +8,29 @@
     dur: 4 + Math.random() * 5,
     delay: -Math.random() * 9,
   }))
+
+  const y = $derived(scrollY.current ?? 0)
 </script>
 
 <div class="scene">
-  {#each stars as s, i (i)}
-    <span
-      class="star"
-      style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
-             animation-duration:{s.dur}s; animation-delay:{s.delay}s"
-    ></span>
-  {/each}
-  <div class="glow"></div>
-  <div class="ground">
-    <div class="plane">
-      <div class="edge left"></div>
-      <div class="dashes"><div class="strip"></div></div>
-      <div class="edge right"></div>
+  <div class="layer" style="transform: translate3d(0, {-y * 0.04}px, 0)">
+    {#each stars as s, i (i)}
+      <span
+        class="star"
+        style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
+               animation-duration:{s.dur}s; animation-delay:{s.delay}s"
+      ></span>
+    {/each}
+  </div>
+
+  <div class="layer" style="transform: translate3d(0, {-y * 0.1}px, 0)">
+    <div class="glow"></div>
+    <div class="ground">
+      <div class="plane">
+        <div class="edge left"></div>
+        <div class="dashes"><div class="strip"></div></div>
+        <div class="edge right"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -33,6 +42,13 @@
     z-index: -1;
     overflow: hidden;
     background: linear-gradient(to bottom, #05070f 0%, #0a1020 58%, #06080f 100%);
+  }
+
+  .layer {
+    position: absolute;
+    inset: 0;
+    height: 150vh;
+    will-change: transform;
   }
 
   .star {
@@ -55,8 +71,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 48%;
-    height: 26%;
+    top: 48vh;
+    height: 26vh;
     background: radial-gradient(
       55% 100% at 50% 30%,
       rgba(94, 177, 255, 0.18),
@@ -78,8 +94,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 56%;
-    bottom: 0;
+    top: 56vh;
+    height: 94vh;
     perspective: 240px;
     perspective-origin: 50% 0%;
     overflow: hidden;

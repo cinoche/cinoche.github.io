@@ -58,11 +58,13 @@ input {
 }
 
 /* pause (not shorten) animations: 0.01ms durations make infinite
-   alternate animations strobe at frame rate */
+   alternate animations strobe at frame rate. Background scenes
+   (.scene) are exempt - they are the app's aesthetic and stay
+   animated; the Gradient background is the static choice. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *:not(.scene, .scene *),
+  *:not(.scene, .scene *)::before,
+  *:not(.scene, .scene *)::after {
     animation-play-state: paused !important;
     transition-duration: 0.01ms !important;
   }

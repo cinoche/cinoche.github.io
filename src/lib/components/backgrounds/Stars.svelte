@@ -1,32 +1,46 @@
 <script lang="ts">
-  const stars = Array.from({ length: 60 }, () => ({
+  import { scrollY } from 'svelte/reactivity/window'
+
+  const stars = Array.from({ length: 70 }, () => ({
     x: Math.random() * 100,
-    y: Math.random() * 68,
+    y: Math.random() * 90,
     r: 1 + Math.random() * 2.6,
     dur: 4 + Math.random() * 5,
     delay: -Math.random() * 9,
   }))
+
+  const y = $derived(scrollY.current ?? 0)
 </script>
 
 <div class="scene">
-  {#each stars as s, i (i)}
-    <span
-      class="star"
-      style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
-             animation-duration:{s.dur}s; animation-delay:{s.delay}s"
-    ></span>
-  {/each}
-  <span class="shooting"></span>
-  <svg class="mountains" viewBox="0 0 1920 440" preserveAspectRatio="xMidYMax slice">
-    <path
-      d="M0 160 L260 0 L480 120 L720 -40 L960 110 L1200 -10 L1460 130 L1700 20 L1920 100 L1920 440 L0 440 Z"
-      fill="#101a30"
-    />
-    <path
-      d="M0 260 L320 120 L600 230 L880 100 L1180 240 L1480 130 L1920 240 L1920 440 L0 440 Z"
-      fill="#070b14"
-    />
-  </svg>
+  <div class="layer" style="transform: translate3d(0, {-y * 0.05}px, 0)">
+    {#each stars as s, i (i)}
+      <span
+        class="star"
+        style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
+               animation-duration:{s.dur}s; animation-delay:{s.delay}s"
+      ></span>
+    {/each}
+    <span class="shooting"></span>
+  </div>
+
+  <div class="layer" style="transform: translate3d(0, {-y * 0.12}px, 0)">
+    <svg class="mountains far" viewBox="0 0 1920 700" preserveAspectRatio="xMidYMin slice">
+      <path
+        d="M0 300 L260 140 L480 260 L720 100 L960 250 L1200 130 L1460 270 L1700 160 L1920 240 L1920 700 L0 700 Z"
+        fill="#101a30"
+      />
+    </svg>
+  </div>
+
+  <div class="layer" style="transform: translate3d(0, {-y * 0.22}px, 0)">
+    <svg class="mountains near" viewBox="0 0 1920 700" preserveAspectRatio="xMidYMin slice">
+      <path
+        d="M0 320 L320 180 L600 290 L880 160 L1180 300 L1480 190 L1920 300 L1920 700 L0 700 Z"
+        fill="#070b14"
+      />
+    </svg>
+  </div>
 </div>
 
 <style>
@@ -36,6 +50,13 @@
     z-index: -1;
     overflow: hidden;
     background: linear-gradient(to bottom, #070b18 0%, #0b1226 70%, #0d1322 100%);
+  }
+
+  .layer {
+    position: absolute;
+    inset: 0;
+    height: 160vh;
+    will-change: transform;
   }
 
   .star {
@@ -58,13 +79,12 @@
 
   .shooting {
     position: absolute;
-    top: 8%;
+    top: 6%;
     left: 78%;
     width: 130px;
     height: 2px;
     border-radius: 2px;
     background: linear-gradient(to left, rgba(255, 255, 255, 0.9), transparent);
-    transform: rotate(-200deg);
     opacity: 0;
     animation: shoot 11s linear infinite;
   }
@@ -91,8 +111,16 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
     width: 100%;
-    height: 40%;
+  }
+
+  .mountains.far {
+    top: 62vh;
+    height: 98vh;
+  }
+
+  .mountains.near {
+    top: 68vh;
+    height: 92vh;
   }
 </style>

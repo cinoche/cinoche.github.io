@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { scrollY } from 'svelte/reactivity/window'
+
   const stars = Array.from({ length: 30 }, () => ({
     x: Math.random() * 100,
     y: Math.random() * 48,
@@ -6,23 +8,30 @@
     dur: 4 + Math.random() * 5,
     delay: -Math.random() * 9,
   }))
+
+  const y = $derived(scrollY.current ?? 0)
 </script>
 
 <div class="scene">
-  {#each stars as s, i (i)}
-    <span
-      class="star"
-      style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
-             animation-duration:{s.dur}s; animation-delay:{s.delay}s"
-    ></span>
-  {/each}
-  <div class="sun"></div>
-  <div class="floor">
-    <div class="plane">
-      <div class="vlines"></div>
-      <div class="hlines"></div>
+  <div class="layer" style="transform: translate3d(0, {-y * 0.04}px, 0)">
+    {#each stars as s, i (i)}
+      <span
+        class="star"
+        style="left:{s.x}%; top:{s.y}%; width:{s.r}px; height:{s.r}px;
+               animation-duration:{s.dur}s; animation-delay:{s.delay}s"
+      ></span>
+    {/each}
+  </div>
+
+  <div class="layer" style="transform: translate3d(0, {-y * 0.1}px, 0)">
+    <div class="sun"></div>
+    <div class="floor">
+      <div class="plane">
+        <div class="vlines"></div>
+        <div class="hlines"></div>
+      </div>
+      <div class="haze"></div>
     </div>
-    <div class="haze"></div>
   </div>
 </div>
 
@@ -33,6 +42,13 @@
     z-index: -1;
     overflow: hidden;
     background: linear-gradient(to bottom, #06080f 0%, #0a1124 55%, #070a14 100%);
+  }
+
+  .layer {
+    position: absolute;
+    inset: 0;
+    height: 150vh;
+    will-change: transform;
   }
 
   .star {
@@ -55,8 +71,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 36%;
-    height: 34%;
+    top: 36vh;
+    height: 34vh;
     background: radial-gradient(
       40% 100% at 50% 50%,
       rgba(59, 130, 246, 0.22),
@@ -78,8 +94,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 52%;
-    bottom: 0;
+    top: 52vh;
+    height: 98vh;
     perspective: 260px;
     perspective-origin: 50% 0%;
     overflow: hidden;
@@ -134,7 +150,7 @@
     left: 0;
     right: 0;
     top: 0;
-    height: 30%;
+    height: 26vh;
     background: linear-gradient(to bottom, #0a1124, transparent);
   }
 </style>
