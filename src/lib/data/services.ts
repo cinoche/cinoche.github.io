@@ -51,6 +51,10 @@ export const services: Service[] = [
   { id: 'yelp', name: 'Yelp', url: 'https://www.yelp.ca', logo: 'logos/yelp.png', category: 'tools' },
 ]
 
+// card artwork is generated from the logo by scripts/make-cards.mjs
+export const cardFor = (s: Service): string =>
+  s.logo.replace('logos/', 'cards/').replace('.png', '.jpg')
+
 const stripAccents = (s: string) =>
   s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
