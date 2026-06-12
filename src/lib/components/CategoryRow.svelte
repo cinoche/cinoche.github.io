@@ -73,9 +73,9 @@
     gap: 16px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    scroll-padding: 24px;
-    padding: 24px 24px 44px;
-    margin: -24px -24px -30px;
+    scroll-padding: 36px;
+    padding: 36px 36px 60px;
+    margin: -36px -36px -46px;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
