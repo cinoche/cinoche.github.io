@@ -27,8 +27,8 @@
     inset: 31px;
     border-radius: calc(var(--radius-card) + 3px);
     box-shadow:
-      0 0 36px 10px rgba(125, 190, 255, 0.85),
-      0 0 95px 36px rgba(94, 177, 255, 0.45);
+      0 0 18px 5px rgba(125, 190, 255, 0.85),
+      0 0 48px 18px rgba(94, 177, 255, 0.45);
     will-change: transform, opacity;
     animation: breathe 2.8s ease-in-out infinite alternate;
   }
