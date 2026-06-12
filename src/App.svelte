@@ -8,6 +8,7 @@
   import UrlLauncher from './lib/components/UrlLauncher.svelte'
   import { categories, matchesQuery, services, type Category } from './lib/data/services'
   import { i18n } from './lib/i18n.svelte'
+  import { settings } from './lib/settings.svelte'
   import { getUrlParam, shouldPromptFullscreen } from './lib/tesla'
 
   let query = $state('')
@@ -37,6 +38,13 @@
   })
 </script>
 
+{#if settings.background !== 'gradient'}
+  <div
+    class="bg"
+    style="background-image: url('backgrounds/{settings.background}.svg')"
+  ></div>
+{/if}
+
 <main>
   <TopBar bind:query onShowInfo={() => (showInfo = true)} />
   <CategoryTabs bind:active={category} />
@@ -64,10 +72,18 @@
 <FullscreenPrompt bind:open={showFullscreenPrompt} />
 
 <style>
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+  }
+
   main {
-    max-width: 1480px;
+    max-width: 2200px;
     margin: 0 auto;
-    padding: 24px 28px 48px;
+    padding: 24px clamp(20px, 2.5vw, 48px) 48px;
     display: flex;
     flex-direction: column;
     gap: 26px;

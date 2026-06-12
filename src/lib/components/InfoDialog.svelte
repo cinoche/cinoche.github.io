@@ -1,6 +1,7 @@
 <script lang="ts">
   import { i18n } from '../i18n.svelte'
   import { APP_VERSION, PROJECT_URL } from '../meta'
+  import { backgrounds, settings } from '../settings.svelte'
   import Dialog from './Dialog.svelte'
 
   let { open = $bindable() }: { open: boolean } = $props()
@@ -23,7 +24,27 @@
     <dt>{i18n.t('info.project')}</dt>
     <dd><a href={PROJECT_URL}>{PROJECT_URL.replace('https://', '')}</a></dd>
   </dl>
-  <button onclick={() => (open = false)}>{i18n.t('close')}</button>
+  <h3>{i18n.t('bg.title')}</h3>
+  <div class="swatches">
+    {#each backgrounds as bg (bg)}
+      <button
+        class="swatch"
+        class:active={settings.background === bg}
+        onclick={() => settings.setBackground(bg)}
+      >
+        <span
+          class="preview"
+          class:gradient={bg === 'gradient'}
+          style={bg === 'gradient'
+            ? ''
+            : `background-image: url('backgrounds/${bg}.svg')`}
+        ></span>
+        {i18n.t(`bg.${bg}`)}
+      </button>
+    {/each}
+  </div>
+
+  <button class="close" onclick={() => (open = false)}>{i18n.t('close')}</button>
 </Dialog>
 
 <style>
@@ -56,7 +77,61 @@
     color: var(--muted);
   }
 
-  button {
+  h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .swatches {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    padding: 6px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .swatch:hover {
+    color: var(--text);
+  }
+
+  .swatch.active {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .preview {
+    width: 76px;
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .preview.gradient {
+    background-color: var(--bg);
+    background-image: radial-gradient(
+      60px 30px at 50% -10px,
+      rgba(59, 130, 246, 0.5),
+      transparent
+    );
+  }
+
+  .close {
     padding: 12px 28px;
     font-size: 16px;
     background: var(--surface);
@@ -65,7 +140,7 @@
     transition: border-color 0.15s ease;
   }
 
-  button:hover {
+  .close:hover {
     border-color: var(--accent);
   }
 </style>

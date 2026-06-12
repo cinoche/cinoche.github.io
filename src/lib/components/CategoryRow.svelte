@@ -59,7 +59,7 @@
   }
 
   .row :global(.card) {
-    width: clamp(240px, 23vw, 330px);
+    width: clamp(220px, 16vw, 360px);
   }
 
   .row {
@@ -85,7 +85,7 @@
   .card {
     position: relative;
     flex: 0 0 auto;
-    width: clamp(240px, 23vw, 330px);
+    width: clamp(220px, 16vw, 360px);
     aspect-ratio: 16 / 9;
     border-radius: var(--radius);
     overflow: hidden;
