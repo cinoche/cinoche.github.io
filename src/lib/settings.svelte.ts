@@ -6,7 +6,7 @@ const STORAGE_KEY = 'cinoche-bg'
 
 function initialBackground(): Background {
   const saved = localStorage.getItem(STORAGE_KEY)
-  return backgrounds.includes(saved as Background) ? (saved as Background) : 'gradient'
+  return backgrounds.includes(saved as Background) ? (saved as Background) : 'random'
 }
 
 class Settings {

@@ -2,6 +2,7 @@
   import { matchesQuery, services, type Category } from '../data/services'
   import { i18n } from '../i18n.svelte'
   import Card from './Card.svelte'
+  import CardFx from './CardFx.svelte'
 
   let {
     category,
@@ -30,12 +31,15 @@
         <Card {service} />
       {/each}
       {#if showCustomUrlCard}
-        <button class="card custom" onclick={onLaunchUrl}>
-          <img class="art" src="cards/chromium.jpg" alt="" loading="lazy" />
-          <div class="scrim"></div>
-          <div class="caption">
-            <img class="logo" src="logos/chromium.png" alt="" loading="lazy" />
-            <span>{i18n.t('tile.customUrl')}</span>
+        <button class="card" onclick={onLaunchUrl}>
+          <CardFx />
+          <div class="inner">
+            <img class="art" src="cards/chromium.jpg" alt="" loading="lazy" />
+            <div class="scrim"></div>
+            <div class="caption">
+              <img class="logo" src="logos/chromium.png" alt="" loading="lazy" />
+              <span>{i18n.t('tile.customUrl')}</span>
+            </div>
           </div>
         </button>
       {/if}
@@ -62,13 +66,16 @@
     width: clamp(220px, 16vw, 360px);
   }
 
+  /* generous padding (offset by negative margins) so hover rings and
+     the scale effect aren't clipped by the scroll container */
   .row {
     display: flex;
     gap: 16px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    padding: 6px 4px 14px;
-    margin: -6px -4px 0;
+    scroll-padding: 12px;
+    padding: 12px 12px 18px;
+    margin: -12px -12px -4px;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
@@ -77,24 +84,19 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 16px;
-    padding: 6px 4px;
-    margin: -6px -4px;
+    padding: 12px;
+    margin: -12px;
   }
 
-  /* custom-URL button mirrors Card.svelte's anchor styling */
+  /* the custom-URL button mirrors Card.svelte: static outer for
+     layout/snap, transforming inner for the hover effect */
   .card {
     position: relative;
     flex: 0 0 auto;
     width: clamp(220px, 16vw, 360px);
     aspect-ratio: 16 / 9;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    border: 1px dashed var(--border);
-    background: var(--surface);
     scroll-snap-align: start;
     padding: 0;
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
-    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
   }
 
   .grid .card {
@@ -103,15 +105,26 @@
 
   .card:hover,
   .card:focus-visible {
-    transform: scale(1.035);
-    border-color: var(--accent);
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
     outline: none;
     z-index: 1;
   }
 
-  .card:active {
-    transform: scale(0.98);
+  .inner {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    border: 1px dashed var(--border);
+    background: var(--surface);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .card:hover .inner,
+  .card:focus-visible .inner {
+    transform: scale(1.035);
+    border-color: var(--accent);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
   }
 
   .art {

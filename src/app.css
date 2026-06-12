@@ -23,6 +23,13 @@
   box-sizing: border-box;
 }
 
+/* animatable angle for the orbiting hover ring on cards */
+@property --orbit {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 html,
 body {
   margin: 0;

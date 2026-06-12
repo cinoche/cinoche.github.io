@@ -1,15 +1,21 @@
 <script lang="ts">
   import { cardFor, type Service } from '../data/services'
+  import CardFx from './CardFx.svelte'
 
   let { service }: { service: Service } = $props()
 </script>
 
+<!-- the outer element owns layout and scroll-snap and never transforms;
+     scaling it would change the snap area and nudge the whole row -->
 <a class="card" href={service.url}>
-  <img class="art" src={cardFor(service)} alt="" loading="lazy" />
-  <div class="scrim"></div>
-  <div class="caption">
-    <img class="logo" src={service.logo} alt="" loading="lazy" />
-    <span>{service.name}</span>
+  <CardFx />
+  <div class="inner">
+    <img class="art" src={cardFor(service)} alt="" loading="lazy" />
+    <div class="scrim"></div>
+    <div class="caption">
+      <img class="logo" src={service.logo} alt="" loading="lazy" />
+      <span>{service.name}</span>
+    </div>
   </div>
 </a>
 
@@ -19,26 +25,29 @@
     flex: 0 0 auto;
     width: 100%;
     aspect-ratio: 16 / 9;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    background: var(--surface);
     scroll-snap-align: start;
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
 
   .card:hover,
   .card:focus-visible {
-    transform: scale(1.035);
-    box-shadow:
-      0 0 0 2px var(--accent),
-      0 10px 32px rgba(0, 0, 0, 0.65);
     outline: none;
     z-index: 1;
   }
 
-  .card:active {
-    transform: scale(0.98);
+  .inner {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .card:hover .inner,
+  .card:focus-visible .inner {
+    transform: scale(1.035);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
   }
 
   .art {
