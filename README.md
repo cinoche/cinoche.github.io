@@ -2,36 +2,30 @@
 
 <https://cinoche.github.io>
 
-Application web qui presente une liste de destinations pour ecouter des videos via un browser WEB.
+Lanceur de divertissement pour le navigateur des véhicules Tesla — une grille de services de streaming, télé, sports et outils pertinents au Québec, avec recherche, catégories et interface bilingue (FR/EN).
 
-Cette application est ecrite principalement pour les vehicules Tesla avec ecrans landscape.
+Entertainment launcher for the Tesla in-car browser — a grid of streaming, TV, sports and tool services relevant to Québec, with search, categories and a bilingual (FR/EN) interface.
 
-Elle contient les sources videos pertinantes au Quebec et qui sont connue pour fonctionner dans les voitures Tesla.
+## Fonctionnalités / Features
 
-Vous pouvez aussi passer un parametre pour ajouter des destinations dynamiquement via le URL:
+* Grille de tuiles tactiles par catégorie (Streaming, Télé, Sports, Outils) avec recherche instantanée
+* Bascule de langue FR/EN mémorisée
+* PWA : l'application se charge instantanément même avec une connexion faible
+* Invite plein écran spécifique Tesla (redirection YouTube pour passer en mode théâtre)
+* Lanceur d'adresse web, avec lien profond : `https://cinoche.github.io/?url=http://some.url.com`
 
-https://cinoche.github.io/?url=http://some.url.com
+## Développement / Development
 
-## Ce qui fonctionne
+Stack : [Vite](https://vite.dev) + [Svelte 5](https://svelte.dev) + TypeScript + [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
 
-* Crave
-* Disney+
-* HBOGO
-* BellTV
-* DAZN
-* Netflix
-* noovo
-* Paramount+
-* Tou.TV
-* TubiTV
-* TVA+
-* Twitch
-* VirginTV
-* Youtube
+```bash
+npm install
+npm run dev      # serveur de développement
+npm run check    # svelte-check + tsc
+npm run build    # build de production dans dist/
+npm run preview  # sert le build de production
+```
 
-## What does not work (yet)
+Le déploiement vers GitHub Pages est automatique à chaque push sur `main` (voir `.github/workflows/deploy.yml`).
 
-* Prime Video (Unsupported browser message)
-* Helix (Unsupported browser message)
-
-
+Les services sont définis dans `src/lib/data/services.ts` — ajouter une entrée et son logo dans `public/logos/` suffit pour ajouter une tuile.
