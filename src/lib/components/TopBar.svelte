@@ -16,7 +16,6 @@
   let bgOpen = $state(false)
   let langOpen = $state(false)
   let fsRedirecting = $state(false)
-  let showFsTip = $state(!localStorage.getItem('cinoche-fs-seen'))
 
   function closeMenu() {
     menuOpen = false
@@ -24,13 +23,7 @@
     langOpen = false
   }
 
-  function dismissFsTip() {
-    showFsTip = false
-    localStorage.setItem('cinoche-fs-seen', '1')
-  }
-
   function handleFullscreen() {
-    dismissFsTip()
     fsRedirecting = true
     setTimeout(goFullscreen, 700)
   }
@@ -174,13 +167,6 @@
         </svg>
       {/if}
     </button>
-
-    {#if showFsTip}
-      <button class="fs-tip" onclick={dismissFsTip} aria-label="Dismiss tip">
-        <span class="fs-tip-arrow" aria-hidden="true"></span>
-        {i18n.t('fs.tip')}
-      </button>
-    {/if}
   </div>
 </header>
 
@@ -335,7 +321,6 @@
   }
 
   .actions {
-    position: relative;
     display: flex;
     gap: 10px;
   }
@@ -395,57 +380,5 @@
   @keyframes breathe {
     from { transform: scale(0.985); opacity: 0.6; }
     to   { transform: scale(1.03);  opacity: 1; }
-  }
-
-  .fs-tip {
-    position: absolute;
-    top: calc(100% + 16px);
-    right: 0;
-    z-index: 200;
-    padding: 14px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    white-space: nowrap;
-    color: var(--text);
-    background: rgba(21, 27, 41, 0.88);
-    backdrop-filter: blur(14px);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius-card);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(125, 190, 255, 0.15);
-    cursor: pointer;
-    animation: tip-in 0.3s ease both, tip-pulse 2.4s ease-in-out 0.4s infinite;
-  }
-
-  .fs-tip-arrow {
-    position: absolute;
-    top: -9px;
-    right: 16px;
-    width: 0;
-    height: 0;
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-bottom: 9px solid var(--accent);
-  }
-
-  .fs-tip-arrow::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: -8px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid rgba(21, 27, 41, 0.88);
-  }
-
-  @keyframes tip-in {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes tip-pulse {
-    0%, 100% { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(125, 190, 255, 0.15); }
-    50%       { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 12px 3px rgba(125, 190, 255, 0.35); }
   }
 </style>
