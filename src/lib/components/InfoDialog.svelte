@@ -28,17 +28,17 @@
 
 <style>
   h2 {
-    margin: 0 0 18px;
-    font-size: 20px;
+    margin: 0 0 22px;
+    font-size: 25px;
     font-weight: 600;
   }
 
   dl {
-    margin: 0 0 22px;
+    margin: 0 0 26px;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 10px 24px;
-    font-size: 15px;
+    gap: 12px 28px;
+    font-size: 19px;
   }
 
   dt {
@@ -52,20 +52,23 @@
   }
 
   .ua {
-    font-size: 13px;
+    font-size: 16px;
     color: var(--muted);
   }
 
   .close {
-    padding: 12px 28px;
-    font-size: 16px;
-    background: var(--surface);
+    padding: 13px 32px;
+    font-size: 20px;
+    background: rgba(21, 27, 41, 0.55);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--border);
-    border-radius: 999px;
-    transition: border-color 0.15s ease;
+    border-radius: var(--radius-card);
+    color: var(--text);
+    transition: border-color 0.15s ease, background 0.15s ease;
   }
 
   .close:hover {
     border-color: var(--accent);
+    background: rgba(59, 130, 246, 0.18);
   }
 </style>
