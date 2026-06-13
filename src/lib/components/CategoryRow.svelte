@@ -117,8 +117,8 @@
     overflow-x: auto;
     scroll-snap-type: x proximity;
     scroll-padding: 68px;
-    padding: 68px 68px 42px;
-    margin: -68px -68px -28px;
+    padding: 68px 68px 80px;
+    margin: -68px -68px -66px;
     scrollbar-width: none;
   }
 
