@@ -1,5 +1,6 @@
 <script lang="ts">
   import { i18n } from '../i18n.svelte'
+  import { recents } from '../recents.svelte'
   import { settings, backgrounds } from '../settings.svelte'
   import { goFullscreen, searchOrNavigate } from '../tesla'
 
@@ -12,10 +13,14 @@
   } = $props()
 
   let menuOpen = $state(false)
+  let bgOpen = $state(false)
+  let langOpen = $state(false)
   let fsRedirecting = $state(false)
 
   function closeMenu() {
     menuOpen = false
+    bgOpen = false
+    langOpen = false
   }
 
   function handleFullscreen() {
@@ -44,27 +49,60 @@
 
     {#if menuOpen}
       <div class="dropdown" role="menu">
-        <div class="section-label">{i18n.t('bg.title')}</div>
-        {#each backgrounds as bg}
-          <button
-            class="menu-item"
-            class:active={settings.background === bg}
-            onclick={() => { settings.setBackground(bg); closeMenu() }}
-            role="menuitem"
-          >
-            {i18n.t(`bg.${bg}` as any)}
-          </button>
-        {/each}
+
+        <!-- Background sub-menu -->
+        <button
+          class="menu-item submenu-toggle"
+          class:open={bgOpen}
+          onclick={() => { bgOpen = !bgOpen; langOpen = false }}
+          role="menuitem"
+          aria-expanded={bgOpen}
+        >
+          {i18n.t('bg.title')}
+          <svg class="chevron" class:rotated={bgOpen} width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        {#if bgOpen}
+          {#each backgrounds as bg}
+            <button
+              class="menu-item menu-subitem"
+              class:active={settings.background === bg}
+              onclick={() => { settings.setBackground(bg); closeMenu() }}
+              role="menuitem"
+            >
+              {i18n.t(`bg.${bg}` as any)}
+            </button>
+          {/each}
+        {/if}
 
         <div class="divider"></div>
 
+        <!-- Language sub-menu -->
         <button
-          class="menu-item"
-          onclick={() => { i18n.toggle(); closeMenu() }}
+          class="menu-item submenu-toggle"
+          class:open={langOpen}
+          onclick={() => { langOpen = !langOpen; bgOpen = false }}
           role="menuitem"
+          aria-expanded={langOpen}
         >
-          {i18n.locale === 'fr' ? 'English' : 'Français'}
+          {i18n.t('menu.language')}
+          <svg class="chevron" class:rotated={langOpen} width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </button>
+        {#if langOpen}
+          {#each (['en', 'fr'] as const) as locale}
+            <button
+              class="menu-item menu-subitem"
+              class:active={i18n.locale === locale}
+              onclick={() => { if (i18n.locale !== locale) i18n.toggle(); closeMenu() }}
+              role="menuitem"
+            >
+              {locale === 'en' ? 'English' : 'Français'}
+            </button>
+          {/each}
+        {/if}
 
         <div class="divider"></div>
 
@@ -75,6 +113,18 @@
         >
           {i18n.t('info.title')}
         </button>
+
+        {#if recents.ids.length > 0}
+          <div class="divider"></div>
+          <button
+            class="menu-item menu-item-danger"
+            onclick={() => { recents.clear(); closeMenu() }}
+            role="menuitem"
+          >
+            {i18n.t('recent.clear')}
+          </button>
+        {/if}
+
       </div>
     {/if}
   </div>
@@ -157,7 +207,7 @@
     top: calc(100% + 8px);
     left: 0;
     z-index: 100;
-    min-width: 180px;
+    min-width: 220px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
@@ -168,20 +218,11 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
-  .section-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 6px 12px 4px;
-  }
-
   .menu-item {
     width: 100%;
     text-align: left;
-    padding: 10px 12px;
-    font-size: 15px;
+    padding: 11px 14px;
+    font-size: 19px;
     background: transparent;
     border: none;
     border-radius: var(--radius-card);
@@ -194,6 +235,42 @@
   }
 
   .menu-item.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .menu-item-danger {
+    color: #f87171;
+  }
+
+  .menu-item-danger:hover {
+    background: color-mix(in srgb, #f87171 15%, transparent);
+  }
+
+  .submenu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .chevron {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+
+  .chevron.rotated {
+    transform: rotate(90deg);
+  }
+
+  .menu-subitem {
+    padding-left: 30px;
+    font-size: 17px;
+    color: var(--muted);
+  }
+
+  .menu-subitem.active {
     color: var(--accent);
     font-weight: 600;
   }

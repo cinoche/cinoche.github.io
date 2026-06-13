@@ -6,6 +6,8 @@ const dict = {
   fr: {
     search: 'Rechercher ou entrer une adresse…',
     'recent.title': 'Récemment utilisé',
+    'recent.clear': 'Effacer les récents',
+    'menu.language': 'Langue',
     'cat.all': 'Tout',
     'cat.streaming': 'Streaming',
     'cat.tv': 'Télé',
@@ -42,6 +44,8 @@ const dict = {
   en: {
     search: 'Search or enter an address…',
     'recent.title': 'Recently Used',
+    'recent.clear': 'Clear Recently Used',
+    'menu.language': 'Language',
     'cat.all': 'All',
     'cat.streaming': 'Streaming',
     'cat.tv': 'TV',

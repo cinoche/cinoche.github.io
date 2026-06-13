@@ -17,6 +17,11 @@ class Recents {
     this.ids = [id, ...this.ids.filter((x) => x !== id)].slice(0, MAX)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(this.ids))
   }
+
+  clear(): void {
+    this.ids = []
+    localStorage.removeItem(STORAGE_KEY)
+  }
 }
 
 export const recents = new Recents()
