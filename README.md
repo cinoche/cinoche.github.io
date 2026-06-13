@@ -11,7 +11,7 @@ Cinoche is a media launcher optimized for the Tesla in-car browser. It presents 
 - **Tile grid by category** — Streaming, TV, Sports, Music, Games, Tools
 - **Recently Used row** — the apps you launch most often appear at the top on your next visit, stored locally in the browser
 - **Instant search** — filter tiles by name, or type a URL / search query and press Enter to navigate directly
-- **Fullscreen mode** — one-tap redirect through YouTube to enter Tesla theater (fullscreen) mode
+- **Fullscreen mode** — tap the fullscreen button in the upper-right corner to enter Tesla theater (fullscreen) mode via a YouTube redirect; one additional tap on the YouTube page is required to confirm
 - **Animated backgrounds** — Gradient, Stars, Road, Aurora, Grid, or Random
 - **Bilingual UI** — English and French, remembered per device
 - **PWA** — installs as a web app and loads instantly even on a weak signal
