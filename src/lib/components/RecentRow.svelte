@@ -3,7 +3,6 @@
   import { i18n } from '../i18n.svelte'
   import { recents } from '../recents.svelte'
   import Card from './Card.svelte'
-  import Hero from './Hero.svelte'
 
   const recentServices = $derived(
     recents.ids
@@ -63,8 +62,6 @@
       </button>
     {/if}
   </section>
-{:else}
-  <Hero />
 {/if}
 
 <style>
