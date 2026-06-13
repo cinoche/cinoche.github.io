@@ -1,5 +1,6 @@
 <script lang="ts">
   import { cardFor, type Service } from '../data/services'
+  import { recents } from '../recents.svelte'
   import CardFx from './CardFx.svelte'
 
   let { service }: { service: Service } = $props()
@@ -7,7 +8,7 @@
 
 <!-- the outer element owns layout and scroll-snap and never transforms;
      scaling it would change the snap area and nudge the whole row -->
-<a class="card" href={service.url}>
+<a class="card" href={service.url} onclick={() => recents.record(service.id)}>
   <CardFx />
   <div class="inner">
     <img class="art" src={cardFor(service)} alt="" loading="lazy" />

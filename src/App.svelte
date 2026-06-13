@@ -2,7 +2,7 @@
   import Background from './lib/components/Background.svelte'
   import CategoryRow from './lib/components/CategoryRow.svelte'
   import CategoryTabs from './lib/components/CategoryTabs.svelte'
-  import Hero from './lib/components/Hero.svelte'
+  import RecentRow from './lib/components/RecentRow.svelte'
   import InfoDialog from './lib/components/InfoDialog.svelte'
   import TopBar from './lib/components/TopBar.svelte'
   import UrlLauncher from './lib/components/UrlLauncher.svelte'
@@ -41,7 +41,7 @@
   <CategoryTabs bind:active={category} />
 
   {#if category === 'all' && !query.trim()}
-    <Hero />
+    <RecentRow />
   {/if}
 
   {#each visibleCategories as cat (cat)}

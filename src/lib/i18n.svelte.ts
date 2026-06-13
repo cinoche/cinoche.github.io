@@ -5,6 +5,7 @@ const STORAGE_KEY = 'cinoche-locale'
 const dict = {
   fr: {
     search: 'Rechercher ou entrer une adresse…',
+    'recent.title': 'Récemment utilisé',
     'cat.all': 'Tout',
     'cat.streaming': 'Streaming',
     'cat.tv': 'Télé',
@@ -40,6 +41,7 @@ const dict = {
   },
   en: {
     search: 'Search or enter an address…',
+    'recent.title': 'Recently Used',
     'cat.all': 'All',
     'cat.streaming': 'Streaming',
     'cat.tv': 'TV',
