@@ -1,31 +1,76 @@
 # Cinoche
 
-<https://cinoche.github.io>
+**Live app:** <https://cinoche.github.io>
 
-Lanceur de divertissement pour le navigateur des véhicules Tesla — une grille de services de streaming, télé, sports et outils pertinents au Québec, avec recherche, catégories et interface bilingue (FR/EN).
+Cinoche is a media launcher optimized for the Tesla in-car browser. It presents streaming, TV, sports, music, games, and utility services as a grid of tiles you can tap directly from the driver or passenger seat. The interface is bilingual (English / French) and persists your preferences and recently used apps across sessions.
 
-Entertainment launcher for the Tesla in-car browser — a grid of streaming, TV, sports and tool services relevant to Québec, with search, categories and a bilingual (FR/EN) interface.
+---
 
-## Fonctionnalités / Features
+## Features
 
-* Grille de tuiles tactiles par catégorie (Streaming, Télé, Sports, Outils) avec recherche instantanée
-* Bascule de langue FR/EN mémorisée
-* PWA : l'application se charge instantanément même avec une connexion faible
-* Invite plein écran spécifique Tesla (redirection YouTube pour passer en mode théâtre)
-* Lanceur d'adresse web, avec lien profond : `https://cinoche.github.io/?url=http://some.url.com`
+- **Tile grid by category** — Streaming, TV, Sports, Music, Games, Tools
+- **Recently Used row** — the apps you launch most often appear at the top on your next visit, stored locally in the browser
+- **Instant search** — filter tiles by name, or type a URL / search query and press Enter to navigate directly
+- **Fullscreen mode** — one-tap redirect through YouTube to enter Tesla theater (fullscreen) mode
+- **Animated backgrounds** — Gradient, Stars, Road, Aurora, Grid, or Random
+- **Bilingual UI** — English and French, remembered per device
+- **PWA** — installs as a web app and loads instantly even on a weak signal
+- **Deep-link URL launcher** — open any site directly: `https://cinoche.github.io/?url=https://example.com`
 
-## Développement / Development
+---
 
-Stack : [Vite](https://vite.dev) + [Svelte 5](https://svelte.dev) + TypeScript + [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
+## Requesting a New Service
+
+If a streaming service, app, or website is missing, [open an issue](https://github.com/cinoche/cinoche.github.io/issues/new) and include:
+
+- The **name** of the service
+- Its **URL** (the direct link to the player or home page, not a marketing page)
+- The **category** it belongs to (Streaming, TV, Sports, Music, Games, or Tools)
+
+Please check the [existing issues](https://github.com/cinoche/cinoche.github.io/issues) first to avoid duplicates.
+
+---
+
+## Current Services
+
+| Category | Services |
+|---|---|
+| Streaming | Netflix, Prime Video, Disney+, Apple TV+, Crave, Max, Hulu, Peacock, Paramount+, Plex, Tou.TV, CBC Gem, Pluto TV, Tubi, Crunchyroll, TikTok, YouTube |
+| TV | Bell Fibe TV, Helix TV, Citytv+, TVA+, YouTube TV, Sling |
+| Sports | DAZN, Twitch, TSN, RDS, FuboTV |
+| Music | YouTube Music, Ohdio, TuneIn |
+| Games | Chess.com, Poki, GeForce Now, Xbox Cloud |
+| Tools | Google Maps, Waze Live Map, ABRP, PlugShare, Windy, MétéoMédia, Yelp, Reddit |
+
+---
+
+## Tech Stack
+
+[Vite](https://vite.dev) + [Svelte 5](https://svelte.dev) + TypeScript + [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
+
+## Development
 
 ```bash
 npm install
-npm run dev      # serveur de développement
+npm run dev      # development server
 npm run check    # svelte-check + tsc
-npm run build    # build de production dans dist/
-npm run preview  # sert le build de production
+npm run build    # production build → dist/
+npm run preview  # serve the production build locally
 ```
 
-Le déploiement vers GitHub Pages est automatique à chaque push sur `main` (voir `.github/workflows/deploy.yml`).
+Deployment to GitHub Pages is automatic on every push to `main` via `.github/workflows/deploy.yml`.
 
-Les services sont définis dans `src/lib/data/services.ts` — ajouter une entrée et son logo dans `public/logos/` suffit pour ajouter une tuile.
+### Adding a service
+
+1. Add an entry to `src/lib/data/services.ts`
+2. Drop a logo (PNG, ideally square, 256 px or larger) into `public/logos/`
+3. Run `node scripts/make-cards.mjs` to generate the 1280×720 card artwork in `public/cards/`
+4. Commit all three files
+
+### Generating card artwork
+
+```bash
+node scripts/make-cards.mjs
+```
+
+This script reads logos from `public/logos/` and produces blurred, dark-tinted card backgrounds in `public/cards/`. It requires [sharp](https://sharp.pixelplumbing.com/) (`npm install` covers it).
