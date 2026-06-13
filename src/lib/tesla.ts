@@ -19,9 +19,8 @@ export function shouldPromptFullscreen(): boolean {
 // Navigating to a youtube.com redirect makes the Tesla browser enter
 // theater (fullscreen) mode for the target site.
 export function goFullscreen(): void {
-  window.location.replace(
-    'https://www.youtube.com/redirect?q=' + window.location.href + '/',
-  )
+  window.location.href =
+    'https://www.youtube.com/redirect?q=' + encodeURIComponent(window.location.href)
 }
 
 export function getUrlParam(name: string): string | null {
@@ -33,4 +32,19 @@ export function navigateTo(raw: string): void {
   if (!url) return
   if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(url)) url = 'https://' + url
   window.location.href = url
+}
+
+// Looks like a URL if it has a scheme or a domain pattern (dot present, no spaces).
+function looksLikeUrl(q: string): boolean {
+  return /^[a-z][a-z0-9+.-]*:\/\//i.test(q) || (/\.\S/.test(q) && !q.includes(' '))
+}
+
+export function searchOrNavigate(raw: string): void {
+  const q = raw.trim()
+  if (!q) return
+  if (looksLikeUrl(q)) {
+    navigateTo(q)
+  } else {
+    window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(q)
+  }
 }

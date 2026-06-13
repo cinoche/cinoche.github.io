@@ -13,6 +13,7 @@
       class:active={active === tab}
       onclick={() => (active = tab)}
     >
+      <span class="fx" aria-hidden="true"><span class="glow"></span></span>
       {i18n.t(`cat.${tab}`)}
     </button>
   {/each}
@@ -27,24 +28,54 @@
   }
 
   button {
+    position: relative;
     padding: 12px 26px;
     min-height: 52px;
     font-size: 17px;
     color: var(--muted);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    background: rgba(21, 27, 41, 0.55);
+    backdrop-filter: blur(12px);
+    border: none;
+    border-radius: var(--radius-card);
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+    transition: color 0.15s ease, transform 0.18s ease;
   }
 
   button:hover {
     color: var(--text);
-    border-color: var(--accent);
+    transform: scale(1.035);
   }
 
   button.active {
     color: var(--text);
-    background: var(--accent-soft);
-    border-color: var(--accent);
+    background: rgba(59, 130, 246, 0.18);
+  }
+
+  .fx {
+    position: absolute;
+    inset: -34px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    border-radius: calc(var(--radius-card) + 3px);
+  }
+
+  button:hover .fx {
+    opacity: 1;
+  }
+
+  .glow {
+    position: absolute;
+    inset: 31px;
+    border-radius: calc(var(--radius-card) + 3px);
+    box-shadow:
+      0 0 18px 5px rgba(125, 190, 255, 0.85),
+      0 0 48px 18px rgba(94, 177, 255, 0.45);
+    animation: breathe 2.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    from { transform: scale(0.985); opacity: 0.6; }
+    to   { transform: scale(1.03);  opacity: 1; }
   }
 </style>
