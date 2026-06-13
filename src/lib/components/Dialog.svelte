@@ -34,7 +34,7 @@
     padding: 0;
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
-    background: rgba(21, 27, 41, 0.78);
+    background: rgba(21, 27, 41, 0.58);
     backdrop-filter: blur(18px);
     color: var(--text);
     box-shadow: var(--shadow);
