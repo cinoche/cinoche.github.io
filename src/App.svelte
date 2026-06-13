@@ -2,15 +2,13 @@
   import Background from './lib/components/Background.svelte'
   import CategoryRow from './lib/components/CategoryRow.svelte'
   import CategoryTabs from './lib/components/CategoryTabs.svelte'
-  import FullscreenPrompt from './lib/components/FullscreenPrompt.svelte'
   import Hero from './lib/components/Hero.svelte'
   import InfoDialog from './lib/components/InfoDialog.svelte'
   import TopBar from './lib/components/TopBar.svelte'
   import UrlLauncher from './lib/components/UrlLauncher.svelte'
   import { categories, matchesQuery, services, type Category } from './lib/data/services'
   import { i18n } from './lib/i18n.svelte'
-  import { settings } from './lib/settings.svelte'
-  import { getUrlParam, shouldPromptFullscreen } from './lib/tesla'
+  import { getUrlParam } from './lib/tesla'
 
   let query = $state('')
   let category = $state<Category | 'all'>('all')
@@ -20,9 +18,6 @@
 
   let showInfo = $state(false)
   let showUrlLauncher = $state(sharedUrl !== null)
-  // skip the fullscreen nag when deep-linking straight into the URL launcher
-  let showFullscreenPrompt = $state(sharedUrl === null && shouldPromptFullscreen())
-
   const visibleCategories = $derived(
     category === 'all' ? categories : [category],
   )
@@ -65,7 +60,6 @@
 
 <UrlLauncher bind:open={showUrlLauncher} initialUrl={sharedUrl ?? ''} />
 <InfoDialog bind:open={showInfo} />
-<FullscreenPrompt bind:open={showFullscreenPrompt} />
 
 <style>
   main {
